@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>مشرفو دفعة 47 – اختيار عشوائي وتوزيع عادل</title>
+    <!-- TailwindCSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* تحسين مظهر شريط التمرير في بعض المتصفحات */
+      * { scrollbar-width: thin; }
+      ::-webkit-scrollbar { height: 8px; width: 8px; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    </style>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-800">
+    <header class="max-w-5xl mx-auto px-4 pt-8 pb-4">
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight mb-2">تم تجهيز قروب تيلقرام لطلبة كلية الحاسبات – دفعة 47 فقط</h1>
+      <p class="text-slate-600 leading-relaxed">
+        القروب مختلف عن الواتس لكنه لنفس الغرض: التعاون والإفادة في الدراسة. مخصص لدفعة 47 فقط ومستمر إلى التخرج بمشيئة الله.
+      </p>
+      <p class="text-slate-700 mt-2"><span class="font-semibold">تنبيه:</span> لدخول القروب، أرسل صورة من البوابة الأكاديمية موضح فيها <span class="underline">الاسم الأول</span>، <span class="underline">اسم التخصص</span>، و<span class="underline">رقم الدفعة</span> إلى أحد المشرفين المناسبين.</p>
+    </header>
+
+    <!-- القسم العشوائي في المنتصف -->
+    <main class="max-w-5xl mx-auto px-4">
+      <section class="grid md:grid-cols-2 gap-4 md:gap-6 items-stretch">
+        <div class="bg-white rounded-2xl shadow-sm p-5 md:p-6 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h2 class="text-lg font-semibold mb-1">المشرف المقترح (شطر الطلاب)</h2>
+            <p class="text-slate-500 mb-4">يتم اختياره عشوائياً عند فتح الصفحة.</p>
+          </div>
+          <a id="randomMale" href="#" target="_blank" rel="noopener" class="group block rounded-xl border border-slate-200 p-5 text-center hover:shadow transition">
+            <div class="text-2xl font-bold group-hover:scale-[1.01] transition-transform" id="randomMaleName">—</div>
+            <div class="text-slate-500 mt-1 text-sm" id="randomMaleLink">—</div>
+          </a>
+          <button id="rerollMale" class="mt-4 inline-flex items-center justify-center rounded-xl border px-4 py-2 text-sm hover:bg-slate-50 active:scale-[.99]">إعادة اختيار</button>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-5 md:p-6 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h2 class="text-lg font-semibold mb-1">المشرفة المقترحة (شطر الطالبات)</h2>
+            <p class="text-slate-500 mb-4">يتم اختيارها عشوائياً عند فتح الصفحة.</p>
+          </div>
+          <a id="randomFemale" href="#" target="_blank" rel="noopener" class="group block rounded-xl border border-slate-200 p-5 text-center hover:shadow transition">
+            <div class="text-2xl font-bold group-hover:scale-[1.01] transition-transform" id="randomFemaleName">—</div>
+            <div class="text-slate-500 mt-1 text-sm" id="randomFemaleLink">—</div>
+          </a>
+          <button id="rerollFemale" class="mt-4 inline-flex items-center justify-center rounded-xl border px-4 py-2 text-sm hover:bg-slate-50 active:scale-[.99]">إعادة اختيار</button>
+        </div>
+      </section>
+
+      <!-- أداة توزيع الطلاب/الطالبات بالتساوي على المشرفين -->
+      <section class="mt-8 md:mt-10 bg-white rounded-2xl shadow-sm p-5 md:p-6 border border-slate-200">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <h2 class="text-lg font-semibold">توزيع الأسماء بالتساوي على المشرفين</h2>
+          <div class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="inline-flex h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+            <span>لا يتم حفظ البيانات خارج جهازك.</span>
+          </div>
+        </div>
+        <p class="text-slate-600 mt-1 text-sm">الصق قائمة الأسماء (اسم في كل سطر)، ثم اختر الشطر واضغط «وزّع بالتساوي».</p>
+
+        <div class="grid md:grid-cols-12 gap-4 md:gap-6 mt-4">
+          <div class="md:col-span-8">
+            <label class="text-sm font-medium text-slate-700" for="namesInput">القائمة</label>
+            <textarea id="namesInput" class="mt-1 w-full min-h-[180px] rounded-xl border-slate-300 focus:border-slate-400 focus:ring-0" placeholder="مثال:\nمحمد علي\nسارة خالد\n..."></textarea>
+          </div>
+          <div class="md:col-span-4 flex flex-col gap-3">
+            <div>
+              <label class="text-sm font-medium text-slate-700" for="trackSelect">الشطر</label>
+              <select id="trackSelect" class="mt-1 w-full rounded-xl border-slate-300 focus:border-slate-400 focus:ring-0">
+                <option value="male">شطر الطلاب</option>
+                <option value="female">شطر الطالبات</option>
+              </select>
+            </div>
+            <div class="mt-auto flex gap-3">
+              <button id="distributeBtn" class="flex-1 rounded-xl bg-slate-900 text-white px-4 py-2.5 text-sm font-semibold hover:opacity-95 active:scale-[.99]">وزّع بالتساوي</button>
+              <button id="clearBtn" class="rounded-xl border px-4 py-2.5 text-sm hover:bg-slate-50">مسح</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="result" class="mt-6 hidden">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="text-base font-semibold">نتيجة التوزيع</h3>
+            <button id="copyAll" class="text-sm underline decoration-dotted hover:no-underline">نسخ الكل</button>
+          </div>
+          <div id="cards" class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+      </section>
+
+      <!-- القائمة الكاملة في نهاية الصفحة -->
+      <section class="mt-10 md:mt-12">
+        <h2 class="text-xl font-bold mb-4">القائمة الكاملة للمشرفين</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200">
+            <h3 class="text-lg font-semibold mb-3">شطر الطلاب</h3>
+            <ul id="maleList" class="space-y-2 text-slate-700"></ul>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200">
+            <h3 class="text-lg font-semibold mb-3">شطر الطالبات</h3>
+            <ul id="femaleList" class="space-y-2 text-slate-700"></ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="py-10"></footer>
+    </main>
+
+    <script>
+      // === البيانات من الرسالة ===
+      const maleSupervisors = [
+        { name: 'يوسف', link: 'https://t.me/ysf_arr' },
+        { name: 'حمود', link: 'https://t.me/CID_18' },
+        { name: 'احمد', link: 'https://t.me/AHMAD_halabi' },
+        { name: 'أنس', link: 'https://t.me/itsanas121' },
+        { name: 'الكاتو', link: 'https://t.me/ElCatoCS' },
+        { name: 'ناصر', link: 'https://t.me/nasser1l' },
+      ];
+
+      const femaleSupervisors = [
+        { name: 'رغد', link: 'https://t.me/Ryrah_05' },
+        { name: 'أثير', link: 'https://t.me/giv22' },
+        { name: 'عهود', link: 'https://t.me/x_laq1i' },
+        { name: 'حنين', link: 'https://t.me/Han2006N' }, // أصلحت بدون https في المصدر
+        { name: 'بَنان', link: 'https://t.me/e_bananarab' },
+        { name: 'دُرر', link: 'https://t.me/vnixu' },
+        { name: 'فاطمة', link: 'https://t.me/ff0ffy' },
+        { name: 'فجر', link: 'https://t.me/apollocirii' },
+        { name: 'بيسال', link: 'https://t.me/Bessal2' },
+      ];
+
+      // أدوات مساعدة
+      const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+      function setRandomCards() {
+        const m = pickRandom(maleSupervisors);
+        const f = pickRandom(femaleSupervisors);
+
+        const mCard = document.getElementById('randomMale');
+        document.getElementById('randomMaleName').textContent = m.name;
+        document.getElementById('randomMaleLink').textContent = m.link.replace('https://', '');
+        mCard.href = m.link;
+
+        const fCard = document.getElementById('randomFemale');
+        document.getElementById('randomFemaleName').textContent = f.name;
+        document.getElementById('randomFemaleLink').textContent = f.link.replace('https://', '');
+        fCard.href = f.link;
+      }
+
+      function renderFullLists() {
+        const maleUL = document.getElementById('maleList');
+        const femaleUL = document.getElementById('femaleList');
+        maleUL.innerHTML = '';
+        femaleUL.innerHTML = '';
+
+        maleSupervisors.forEach((s, i) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a class="inline-flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-slate-50 border border-transparent hover:border-slate-200" href="${s.link}" target="_blank" rel="noopener"><span class="font-medium">${i+1}. ${s.name}</span><span class="text-slate-500 text-sm">${s.link.replace('https://', '')}</span></a>`;
+          maleUL.appendChild(li);
+        });
+
+        femaleSupervisors.forEach((s, i) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a class="inline-flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-slate-50 border border-transparent hover:border-slate-200" href="${s.link}" target="_blank" rel="noopener"><span class="font-medium">${i+1}. ${s.name}</span><span class="text-slate-500 text-sm">${s.link.replace('https://', '')}</span></a>`;
+          femaleUL.appendChild(li);
+        });
+      }
+
+      // توزيع Round-Robin متساوٍ
+      function distributeEqually(names, supervisors) {
+        const clean = names
+          .map(n => n.trim())
+          .filter(Boolean);
+        const buckets = supervisors.map(s => ({ supervisor: s, names: [] }));
+        let idx = 0;
+        clean.forEach(n => {
+          buckets[idx % buckets.length].names.push(n);
+          idx++;
+        });
+        return buckets;
+      }
+
+      function renderDistribution(buckets) {
+        const result = document.getElementById('result');
+        const cards = document.getElementById('cards');
+        cards.innerHTML = '';
+        result.classList.toggle('hidden', buckets.length === 0);
+        buckets.forEach(({ supervisor, names }) => {
+          const card = document.createElement('div');
+          card.className = 'rounded-xl border border-slate-200 bg-white p-4';
+          const listHTML = names.length
+            ? `<ol class="list-decimal pl-5 space-y-1 text-sm">${names.map(n => `<li>${n}</li>`).join('')}</ol>`
+            : '<div class="text-slate-500 text-sm">لا توجد أسماء.</div>';
+          card.innerHTML = `
+            <div class="flex items-center justify-between gap-3">
+              <a href="${supervisor.link}" target="_blank" rel="noopener" class="font-semibold hover:underline">${supervisor.name}</a>
+              <span class="text-xs text-slate-500">${names.length} طالب/ـة</span>
+            </div>
+            <div class="mt-3">${listHTML}</div>
+          `;
+          cards.appendChild(card);
+        });
+      }
+
+      function copyDistributionText(buckets) {
+        const blocks = buckets.map(({ supervisor, names }) => {
+          const header = `- ${supervisor.name} (${names.length})`;
+          const body = names.map(n => `  • ${n}`).join('\n');
+          return [header, body].filter(Boolean).join('\n');
+        }).join('\n\n');
+        navigator.clipboard.writeText(blocks).then(() => {
+          const btn = document.getElementById('copyAll');
+          const original = btn.textContent;
+          btn.textContent = 'تم النسخ ✅';
+          setTimeout(() => (btn.textContent = original), 1200);
+        });
+      }
+
+      // الأحداث
+      document.getElementById('rerollMale').addEventListener('click', setRandomCards);
+      document.getElementById('rerollFemale').addEventListener('click', setRandomCards);
+
+      document.getElementById('distributeBtn').addEventListener('click', () => {
+        const raw = document.getElementById('namesInput').value || '';
+        const track = document.getElementById('trackSelect').value; // male | female
+        const names = raw.split(/\r?\n/);
+        const supervisors = track === 'male' ? maleSupervisors : femaleSupervisors;
+        const buckets = distributeEqually(names, supervisors);
+        renderDistribution(buckets);
+        // حفظ آخر نتيجة مؤقتاً في الذاكرة لاستخدام زر النسخ
+        window.__lastBuckets = buckets;
+      });
+
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        document.getElementById('namesInput').value = '';
+        document.getElementById('result').classList.add('hidden');
+        document.getElementById('cards').innerHTML = '';
+      });
+
+      document.getElementById('copyAll').addEventListener('click', () => {
+        if (window.__lastBuckets) copyDistributionText(window.__lastBuckets);
+      });
+
+      // تشغيل أولي
+      setRandomCards();
+      renderFullLists();
+    </script>
+  </body>
+</html>
